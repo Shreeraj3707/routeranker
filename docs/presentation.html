@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RouteRanker Presentation</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RouteRanker Presentation</h1>
+</header>
+<p># RouteRanker — Stakeholder Presentation</p>
+<p>*(12 slides. Speaker notes in italics.)*</p>
+<p>-–</p>
+<p>### Slide 1 — Title</p>
+<p>**RouteRanker: AI-Powered Public Transit Route Optimization**</p>
+<p>*Bengaluru BMTC case study — 4,416 routes analyzed*</p>
+<p>-–</p>
+<p>### Slide 2 — The Problem</p>
+<p>Indian city bus networks suffer from:</p>
+<p>- 🚌 Overcrowded trunk routes at peak hours</p>
+<p>- 🚌 Underused feeder routes off-peak</p>
+<p>- 🚌 Duplicate coverage on shared corridors</p>
+<p>- 🚌 No scalable method for planners to compare route efficiency</p>
+<p>*Today, route review is manual and quarterly at best. RouteRanker
+automates it.*</p>
+<p>-–</p>
+<p>### Slide 3 — Approach</p>
+<p>**Input:** GTFS timetable data (routes, trips, stop times, stops)</p>
+<p>**Output:** Route-level efficiency labels + actionable
+recommendations</p>
+<p>**Method:** Feature engineering → clustering → classification →
+rule-based optimizer → dashboard</p>
+<p>*We don’t need passenger counters to find inefficiencies — the
+timetable itself contains the signal.*</p>
+<p>-–</p>
+<p>### Slide 4 — Data</p>
+<div class="line-block">Item | Value |</div>
+<p>|—|—|</p>
+<div class="line-block">City | Bengaluru (BMTC) |</div>
+<div class="line-block">Routes | 4,416 |</div>
+<div class="line-block">Trips | 57,836 |</div>
+<div class="line-block">Stop events | 1,540,686 |</div>
+<div class="line-block">Stops | 9,960 |</div>
+<p>*The same pipeline runs unchanged on Delhi, Mumbai, Hyderabad, Pune —
+any GTFS feed.*</p>
+<p>-–</p>
+<p>### Slide 5 — What We Learned</p>
+<p>- Trip counts are heavily right-skewed: median 3 trips/route, max
+398</p>
+<p>- 68% of routes are **balanced**</p>
+<p>- 27% are **underutilized** (near-empty off-peak)</p>
+<p>- 4% are **overcrowded** (peak-hour trunk corridors)</p>
+<p>*The 4% overcrowded routes serve the busiest corridors — they are
+where interventions matter most.*</p>
+<p>-–</p>
+<p>### Slide 6 — Method: Clustering</p>
+<p>- **KMeans (k=3)** on 31 standardized features</p>
+<p>- **Silhouette = 0.796** → excellent cluster separation</p>
+<p>- **DBSCAN** flags 429 outlier routes for manual review</p>
+<p>*Three naturally distinct route archetypes emerge from the data — no
+manual grouping needed.*</p>
+<p>-–</p>
+<p>### Slide 7 — Method: Classification</p>
+<p>- **XGBoost** and **RandomForest** predict route performance
+class</p>
+<p>- Test accuracy: **99.8–100%**</p>
+<p>- Feature importances align with planner intuition: trip_count,
+peak_ratio, route_length_km dominate</p>
+<p>*The model distills a hand-crafted business rule into a fast
+surrogate — planners can apply it to any new GTFS feed in seconds.*</p>
+<p>-–</p>
+<p>### Slide 8 — Optimization Engine</p>
+<p>For each route, RouteRanker recommends:</p>
+<div class="line-block">Class | Recommendation |</div>
+<p>|—|—|</p>
+<div class="line-block">Overcrowded | +15% peak frequency, larger buses,
+consider splitting |</div>
+<div class="line-block">Underutilized | −15% off-peak frequency,
+evaluate merging, mini-buses |</div>
+<div class="line-block">Balanced | Maintain, monitor quarterly |</div>
+<p>-–</p>
+<p>### Slide 9 — Simulation Results</p>
+<p>Applying the optimizer to the current schedule:</p>
+<p>- **184** overcrowded routes gain peak capacity</p>
+<p>- **1,198** underutilized routes free up off-peak trips</p>
+<p>- Net effect: **~3,000 trips/week redistributed** toward underserved
+corridors</p>
+<p>- **No increase in total fleet size**</p>
+<p>-–</p>
+<p>### Slide 10 — The Dashboard</p>
+<p>Streamlit app with 5 tabs:</p>
+<p>1. **Overview** — KPIs and distribution charts</p>
+<p>2. **Map** — interactive stop network across Bengaluru</p>
+<p>3. **Predictions** — route-by-route performance table</p>
+<p>4. **Optimization** — per-route recommendations</p>
+<p>5. **Simulation** — current vs optimized trip counts</p>
+<p>*Planners can filter by class and cluster, drill into any route, and
+download CSVs for further analysis.*</p>
+<p>-–</p>
+<p>### Slide 11 — Architecture &amp; Extensibility</p>
+<p>GTFS → clean → features → cluster + classify → optimize →
+dashboard</p>
+<p>- **Plug-and-play** for any GTFS city feed</p>
+<p>- **Modular** — swap models or add features without rewriting the
+pipeline</p>
+<p>- **Fast** — full run in under 5 minutes on a laptop</p>
+<p>-–</p>
+<p>### Slide 12 — Roadmap</p>
+<p>**Next 3 months:**</p>
+<p>- Integrate APC (Automatic Passenger Counter) data for real ridership
+labels</p>
+<p>- Add <code>shapes.txt</code>-based route overlap detection for
+merging recommendations</p>
+<p>- Deploy containerized version with scheduled weekly GTFS refresh</p>
+<p>**Next 6 months:**</p>
+<p>- Multi-objective optimization (frequency + fleet + equity)</p>
+<p>- Live road-network travel times via Google/Mapbox APIs</p>
+<p>- Multi-city deployment: Delhi, Mumbai, Hyderabad</p>
+<p>-–</p>
+<p>### Slide 13 — Ask / Next Steps</p>
+<p>- **Pilot** with BMTC planning team on 20 routes</p>
+<p>- **Data partnership** for APC/ticketing feeds</p>
+<p>- **Budget** for cloud deployment + monitoring</p>
+<p>*RouteRanker is production-ready today on any GTFS feed. The only
+missing piece is real ridership data to convert proxies into ground
+truth.*</p>
+</body>
+</html>

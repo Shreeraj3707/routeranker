@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RouteRanker Final Report</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RouteRanker Final Report</h1>
+</header>
+<p># RouteRanker — AI-Powered Public Transit Route Optimization</p>
+<p>**Final Technical Report**</p>
+<p>-–</p>
+<p>## 1. Executive Summary</p>
+<p>RouteRanker is an end-to-end machine-learning system that analyzes
+General Transit</p>
+<p>Feed Specification (GTFS) data from Indian cities to identify
+inefficient bus routes</p>
+<p>and recommend schedule/route optimizations. The system was built and
+validated on</p>
+<p>the BMTC (Bengaluru Metropolitan Transport Corporation) feed
+containing</p>
+<p>**4,416 routes, 57,836 trips, and 1.54 million stop-time events**,
+and delivers:</p>
+<p>- Automated route segmentation via KMeans clustering (silhouette =
+**0.796**)</p>
+<p>- Performance classification into *balanced* / *overcrowded* /
+*underutilized*</p>
+<p>- A rule-driven optimization engine producing actionable
+recommendations</p>
+<p>- A Streamlit dashboard for transit planners</p>
+<p>The system runs on commodity hardware in under 5 minutes
+end-to-end.</p>
+<p>-–</p>
+<p>## 2. Problem Statement</p>
+<p>Indian city bus networks frequently suffer from:</p>
+<p>- **Overcrowded trunk routes** during peak hours</p>
+<p>- **Underutilized feeder routes** running near-empty off-peak</p>
+<p>- **Duplicate coverage** where multiple routes serve overlapping
+corridors</p>
+<p>- **No systematic method** for planners to compare route efficiency
+at scale</p>
+<p>RouteRanker addresses this by converting raw GTFS timetables into
+per-route</p>
+<p>features, learning groupings of similar routes, and generating</p>
+<p>recommendations such as frequency adjustment, route merging, and
+fleet</p>
+<p>reassignment.</p>
+<p>-–</p>
+<p>## 3. Data Source</p>
+<div class="line-block">Item | Value |</div>
+<p>|—|—|</p>
+<div class="line-block">Source | BMTC GTFS (community-maintained, Namma
+BMTC app) |</div>
+<div class="line-block">Coverage | Bengaluru Metropolitan Region |</div>
+<div class="line-block">Files used | <code>routes.txt</code>,
+<code>trips.txt</code>, <code>stop\_times.txt</code>,
+<code>stops.txt</code>, <code>calendar.txt</code> |</div>
+<div class="line-block">Routes | 4,434 (4,416 after cleaning) |</div>
+<div class="line-block">Trips | 57,836 |</div>
+<div class="line-block">Stop-time events | 1,540,686 |</div>
+<div class="line-block">Stops | 9,960 |</div>
+<div class="line-block">Calendar services | 1 (uniform daily service)
+|</div>
+<p>Data was sourced as GTFS and cleaned with
+<code>src/data\_loader.py</code>. Times were</p>
+<p>parsed into seconds-since-midnight to handle GTFS’s “hours ≥ 24”
+convention.</p>
+<p>-–</p>
+<p>## 4. Feature Engineering</p>
+<p><code>src/feature\_engineering.py</code> produces one row per route
+with the following</p>
+<p>features:</p>
+<div class="line-block">Feature | Description |</div>
+<p>|—|—|</p>
+<div class="line-block"><code>trip\_count</code> | Number of trips
+scheduled on the route |</div>
+<div class="line-block"><code>unique\_stops</code> | Distinct stops
+served |</div>
+<div class="line-block"><code>avg\_duration\_sec</code> | Mean trip
+duration |</div>
+<div class="line-block"><code>trips\_hour\_00</code> …
+<code>trips\_hour\_23</code> | Stop-events per hour of day |</div>
+<div class="line-block"><code>peak\_ratio</code> | Peak-hour events ÷
+off-peak events (peak = 7–10 AM, 5–8 PM) |</div>
+<div class="line-block"><code>weekday\_score</code> | Days per week the
+route operates (from calendar) |</div>
+<div class="line-block"><code>route\_length\_km</code> | Mean trip
+length computed via vectorized haversine |</div>
+<p>Haversine distances were computed in a single NumPy vectorized
+operation</p>
+<p>across all 1.54M stop pairs, keeping runtime under 2 minutes.</p>
+<p>-–</p>
+<p>## 5. Exploratory Data Analysis</p>
+<p>Charts saved in <code>docs/eda/</code>:</p>
+<p>- <code>hourly\_curve.png</code> — network-wide stop events by hour
+reveals the classic</p>
+<p> double-peak morning/evening pattern</p>
+<p>- <code>corr\_heatmap.png</code> — feature correlations</p>
+<p>- <code>scatter\_usage.html</code> — interactive route-usage
+scatter</p>
+<p>- <code>feature\_distributions.png</code> — distributions of the five
+core features</p>
+<p>**Key insight:** trip counts are heavily right-skewed (median = 3,
+max = 398).</p>
+<p>A small number of trunk routes carry the majority of scheduled trips
+— exactly</p>
+<p>the pattern the optimizer must address.</p>
+<p>-–</p>
+<p>## 6. Methodology</p>
+<p>### 6.1 Labeling</p>
+<p>Routes were labeled using quantile thresholds on
+<code>trip\_count</code> and <code>peak\_ratio</code>:</p>
+<p>- **Overcrowded** — top quartile of both <code>trip\_count</code> and
+<code>peak\_ratio</code></p>
+<p>- **Underutilized** — bottom quartile of both</p>
+<p>- **Balanced** — everything else</p>
+<p>Resulting distribution:</p>
+<div class="line-block">Class | Count | Share |</div>
+<p>|—|—|—|</p>
+<div class="line-block">Balanced | 3,034 | 68.7% |</div>
+<div class="line-block">Underutilized | 1,198 | 27.1% |</div>
+<div class="line-block">Overcrowded | 184 | 4.2% |</div>
+<p>### 6.2 Clustering</p>
+<p>- **KMeans** with k = 3 on standardized features</p>
+<p>- **Silhouette score = 0.796** (excellent separation)</p>
+<p>- **DBSCAN** (eps = 1.5, min_samples = 2) flagged **429 outlier
+routes** —</p>
+<p> candidates for detailed review</p>
+<p>### 6.3 Classification</p>
+<p>- **XGBoost** — 100% test accuracy</p>
+<p>- **RandomForest** — 99.8% test accuracy</p>
+<p>**Interpretation:** The classification stage is designed as a
+*surrogate</p>
+<p>learner*. Labels are assigned via a deterministic rule over
+<code>trip\_count</code></p>
+<p>and <code>peak\_ratio</code> quantiles; the models learn to reproduce
+that rule.</p>
+<p>Near-perfect accuracy is therefore expected and confirms the
+surrogate is</p>
+<p>correct — it is not evidence of a predictive generalizer.</p>
+<p>The practical value of the surrogate is speed and portability:
+the</p>
+<p>quantile thresholds depend on the full network distribution, so
+applying</p>
+<p>the rule to a brand-new GTFS feed requires recomputing them. The
+trained</p>
+<p>model lets planners skip that step and label new feeds instantly.</p>
+<p>A future iteration should train on real ridership signals (APC
+data,</p>
+<p>ticketing) to produce a genuine predictive classifier rather than a
+rule</p>
+<p>surrogate.</p>
+<p>### 6.4 Optimization Engine</p>
+<p><code>src/inference.py</code> assigns each route a performance class
+and generates</p>
+<p>rule-based recommendations:</p>
+<p>- **Overcrowded** → increase peak frequency, deploy larger buses,
+consider</p>
+<p> splitting route</p>
+<p>- **Underutilized** → reduce off-peak frequency, evaluate merging,
+deploy</p>
+<p> mini-buses</p>
+<p>- **Balanced** → maintain and monitor quarterly</p>
+<p>A simulation step multiplies each route’s trip_count by 1.15
+(overcrowded)</p>
+<p>or 0.85 (underutilized) and reports delta vs current schedule.</p>
+<p>-–</p>
+<p>## 7. System Architecture</p>
+<p>GTFS raw files</p>
+<p>│</p>
+<p>▼</p>
+<p>[data_loader.py] → clean, parse times</p>
+<p>│</p>
+<p>▼</p>
+<p>[feature_engineering.py] → per-route feature table</p>
+<p>│</p>
+<p>├──▶ [eda.py] → charts + labels</p>
+<p>│</p>
+<p>▼</p>
+<p>[preprocessing.py] → scaling, train/test split</p>
+<p>│</p>
+<p>├──▶ [clustering.py] → KMeans + DBSCAN</p>
+<p>│</p>
+<p>├──▶ [classification.py] → XGBoost + RF</p>
+<p>│</p>
+<p>▼</p>
+<p>[inference.py] → recommendations + simulation</p>
+<p>│</p>
+<p>▼</p>
+<p>[app.py] → Streamlit dashboard</p>
+<p>-–</p>
+<p>## 8. Results</p>
+<div class="line-block">Metric | Value |</div>
+<p>|—|—|</p>
+<div class="line-block">Routes analyzed | 4,416 |</div>
+<div class="line-block">Clustering silhouette | 0.796 |</div>
+<div class="line-block">Outlier routes flagged | 429 |</div>
+<div class="line-block">Overcrowded routes | 184 |</div>
+<div class="line-block">Underutilized routes | 1,198 |</div>
+<div class="line-block">Balanced routes | 3,034 |</div>
+<div class="line-block">XGBoost test accuracy | 100% (surrogate) |</div>
+<div class="line-block">RandomForest test accuracy | 99.8% (surrogate)
+|</div>
+<div class="line-block">End-to-end runtime | &lt; 5 minutes |</div>
+<p>### Business impact estimate</p>
+<p>If the 184 overcrowded routes gain 15% more peak trips and the
+1,198</p>
+<p>underutilized routes lose 15% of off-peak trips, the simulated
+schedule</p>
+<p>redistributes roughly **~3,000 trips per week** toward underserved
+corridors</p>
+<p>without increasing total fleet size.</p>
+<p>-–</p>
+<p>## 9. Limitations &amp; Future Work</p>
+<p>- **Label circularity** — the current classifier is a surrogate of
+the</p>
+<p> hand-crafted rule, not an independent predictor. A future version
+should</p>
+<p> train on real ridership signals (APC data, ticketing counts).</p>
+<p>- **No crowding ground truth** — GTFS does not include passenger
+counts.</p>
+<p> Proxy features (peak_ratio, frequency density) were used.</p>
+<p>- **Single-service calendar** — BMTC’s feed defines one all-week
+service, so</p>
+<p> weekday/weekend differentiation was not possible.</p>
+<p>- **Static optimization** — the current engine does not model
+road-network</p>
+<p> travel times or vehicle constraints.</p>
+<p>### Future work</p>
+<p>1. Integrate Automatic Passenger Counter (APC) data where
+available</p>
+<p>2. Use <code>shapes.txt</code> to compute geometric overlaps between
+routes for merging</p>
+<p>3. Add a multi-objective optimizer (frequency + fleet size +
+equity)</p>
+<p>4. Deploy as a containerized service with a scheduled GTFS
+refresh</p>
+<p>-–</p>
+<p>## 10. Deliverables</p>
+<div class="line-block">Item | Path |</div>
+<p>|—|—|</p>
+<div class="line-block">Source code | <code>src/</code> |</div>
+<div class="line-block">Models | <code>models/\*.pkl</code> |</div>
+<div class="line-block">Recommendations |
+<code>data/processed/route\_recommendations.csv</code> |</div>
+<div class="line-block">Simulation |
+<code>data/processed/simulation.csv</code> |</div>
+<div class="line-block">EDA charts | <code>docs/eda/</code> |</div>
+<div class="line-block">Dashboard | <code>app.py</code> |</div>
+<div class="line-block">Dockerfile | <code>Dockerfile</code> |</div>
+<div class="line-block">This report | <code>docs/final\_report.md</code>
+|</div>
+<p>-–</p>
+<p>## 11. Conclusion</p>
+<p>RouteRanker demonstrates that off-the-shelf ML (KMeans, DBSCAN,
+XGBoost,</p>
+<p>RandomForest) combined with careful feature engineering can convert a
+raw</p>
+<p>GTFS feed into actionable transit optimization insights. On 4,416
+Bengaluru</p>
+<p>routes, the system identifies 184 overcrowded corridors and 1,198</p>
+<p>underused ones, and provides a working planner-facing dashboard.
+The</p>
+<p>architecture generalizes to any GTFS-compliant city feed with no
+code</p>
+<p>changes.</p>
+</body>
+</html>

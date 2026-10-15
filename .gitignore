@@ -1,0 +1,34 @@
+# Virtual environment
+routeranker_env/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Raw GTFS data (too large — 200+ MB)
+data/raw/
+
+# Model binaries (large; regenerate by running pipeline)
+models/*.pkl
+
+# Processed data — KEEP small CSVs, ignore large .npy
+data/processed/*.npy
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Report outputs (kept in docs/, but PDFs re-generate)
+*.log
