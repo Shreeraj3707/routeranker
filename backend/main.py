@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.model_loader import bundle
-from backend.routers import routes, predict
+from backend.routers import routes, predict, admin
 from backend.db import engine, Base
 from backend import orm_models  # ensures models are registered
 
