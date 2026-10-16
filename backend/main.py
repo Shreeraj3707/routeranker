@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.model_loader import bundle
 from backend.routers import routes, predict
+from backend.db import engine, Base
+from backend import orm_models  # ensures models are registered
 
 app = FastAPI(
     title="RouteRanker API",
@@ -26,6 +28,10 @@ app.add_middleware(
 
 @app.on_event("startup")
 def startup():
+    # Create tables if they don't exist (idempotent)
+    Base.metadata.create_all(bind=engine)
+    print("[startup] DB tables ensured")
+
     try:
         bundle.load()
         print("[startup] models loaded successfully")
