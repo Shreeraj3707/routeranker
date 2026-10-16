@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.model_loader import bundle
-from backend.routers import routes, predict, admin
+from backend.routers import routes, predict, admin, auth
 from backend.db import engine, Base
 from backend import orm_models  # ensures models are registered
 
@@ -60,3 +60,4 @@ def health():
 app.include_router(routes.router)
 app.include_router(predict.router)
 app.include_router(admin.router)
+app.include_router(auth.router)
