@@ -32,3 +32,23 @@ Thumbs.db
 
 # Report outputs (kept in docs/, but PDFs re-generate)
 *.log
+# Backend
+backend/__pycache__/
+backend/routers/__pycache__/
+*.db
+*.sqlite3
+.env 
+# C practice files
+*.c
+*.exe
+*.o
+
+# Local database
+routeranker.db
+
+# Environment
+.env
+
+# Backend caches
+backend/__pycache__/
+backend/routers/__pycache__

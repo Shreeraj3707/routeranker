@@ -11,3 +11,7 @@ folium
 streamlit-folium
 shapely
 joblib
+fastapi
+uvicorn[standard]
+pydantic
+requests
