@@ -59,3 +59,4 @@ def health():
 
 app.include_router(routes.router)
 app.include_router(predict.router)
+app.include_router(admin.router)
